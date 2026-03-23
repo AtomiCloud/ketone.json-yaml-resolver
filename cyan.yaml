@@ -1,0 +1,18 @@
+username: atomi
+name: json-yaml
+description: AtomiCloud's JSON and YAML merger
+project: https://github.com/AtomiCloud/ketone.json-yaml-resolver
+source: https://github.com/AtomiCloud/ketone.json-yaml-resolver
+email: ernest@atomi.cloud
+tags: ["atomi","json","yaml"]
+readme: README.MD
+build:
+  registry: ${DOMAIN:-docker.io}/${GITHUB_REPO_REF:-atomi}
+  platforms:
+    - linux/amd64
+    - linux/arm64
+  images:
+    resolver:
+      image: json-yaml
+      dockerfile: Dockerfile
+      context: .
