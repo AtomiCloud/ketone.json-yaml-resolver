@@ -1,0 +1,11 @@
+{
+  "allow": [
+    "admin",
+    "user",
+    "guest"
+  ],
+  "env": [
+    "dev",
+    "prod"
+  ]
+}

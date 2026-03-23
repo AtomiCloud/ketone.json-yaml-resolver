@@ -1,0 +1,12 @@
+base1: &base1
+  timeout: 30
+  retries: 3
+
+base2: &base2
+  timeout: 60
+  retries: 5
+  log_level: debug
+
+server:
+  <<: [*base1, *base2]
+  host: localhost

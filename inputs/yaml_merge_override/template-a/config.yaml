@@ -1,0 +1,9 @@
+defaults: &defaults
+  timeout: 30
+  retries: 3
+  host: default-host
+
+server:
+  timeout: 60
+  <<: *defaults
+  port: 8080

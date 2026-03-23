@@ -1,0 +1,8 @@
+common:
+  timeout: 30
+  retries: 3
+server:
+  timeout: 30
+  retries: 3
+  host: localhost
+

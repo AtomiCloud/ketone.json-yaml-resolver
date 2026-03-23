@@ -1,0 +1,13 @@
+base1:
+  timeout: 30
+  retries: 3
+base2:
+  timeout: 60
+  retries: 5
+  log_level: debug
+server:
+  timeout: 30
+  retries: 3
+  log_level: debug
+  host: localhost
+

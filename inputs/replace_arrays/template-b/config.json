@@ -1,0 +1,4 @@
+{
+  "tags": ["v2"],
+  "features": ["auth", "logging"]
+}
