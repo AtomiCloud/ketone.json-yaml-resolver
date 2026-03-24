@@ -1,12 +1,207 @@
 tests:
-  - name: single_file_resolve
+  # 1. Single file passthrough (normalization)
+  - name: single_json
     expected:
       type: snapshot
       value:
-        path: ./snapshots/single_file_resolve
+        path: ./snapshots/single_json
     config: {}
     resolver_inputs:
-      - path: ./inputs/single_file_resolve/template-a
+      - path: ./inputs/single_json/template-a
+        origin:
+          template: template-a
+          layer: 0
+
+  # 2. JSON shallow merge
+  - name: shallow_merge
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/shallow_merge
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/shallow_merge/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/shallow_merge/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 3. JSON deep merge (nested objects)
+  - name: deep_merge
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/deep_merge
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/deep_merge/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/deep_merge/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 4a. JSON concat arrays (default)
+  - name: concat_arrays
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/concat_arrays
+    config:
+      arrayStrategy: concat
+    resolver_inputs:
+      - path: ./inputs/concat_arrays/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/concat_arrays/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 4b. JSON replace arrays
+  - name: replace_arrays
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/replace_arrays
+    config:
+      arrayStrategy: replace
+    resolver_inputs:
+      - path: ./inputs/replace_arrays/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/replace_arrays/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 4c. JSON distinct arrays
+  - name: distinct_arrays
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/distinct_arrays
+    config:
+      arrayStrategy: distinct
+    resolver_inputs:
+      - path: ./inputs/distinct_arrays/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/distinct_arrays/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 5. YAML scalar merge
+  - name: yaml_scalar
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/yaml_scalar
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/yaml_scalar/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/yaml_scalar/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 6. YAML nested merge
+  - name: yaml_nested
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/yaml_nested
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/yaml_nested/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/yaml_nested/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  # 7. YAML with anchors → plain output
+  - name: yaml_anchors
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/yaml_anchors
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/yaml_anchors/template-a
+        origin:
+          template: template-a
+          layer: 0
+
+  # 8. YAML merge key override precedence (explicit key before << wins)
+  - name: yaml_merge_override
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/yaml_merge_override
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/yaml_merge_override/template-a
+        origin:
+          template: template-a
+          layer: 0
+
+  # 9. YAML merge-key sequence precedence (earlier mapping in sequence wins)
+  - name: yaml_merge_sequence
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/yaml_merge_sequence
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/yaml_merge_sequence/template-a
+        origin:
+          template: template-a
+          layer: 0
+
+  # 10. Commutativity (same inputs, different order)
+  - name: commutativity_order_1
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/commutativity
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/commutativity/template-a
+        origin:
+          template: template-a
+          layer: 0
+      - path: ./inputs/commutativity/template-b
+        origin:
+          template: template-b
+          layer: 1
+
+  - name: commutativity_order_2
+    expected:
+      type: snapshot
+      value:
+        path: ./snapshots/commutativity
+    config: {}
+    resolver_inputs:
+      - path: ./inputs/commutativity/template-b
+        origin:
+          template: template-b
+          layer: 1
+      - path: ./inputs/commutativity/template-a
         origin:
           template: template-a
           layer: 0

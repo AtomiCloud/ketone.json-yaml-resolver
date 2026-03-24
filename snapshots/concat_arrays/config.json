@@ -1,0 +1,12 @@
+{
+  "scripts": [
+    "build",
+    "lint",
+    "test",
+    "build"
+  ],
+  "dependencies": [
+    "express",
+    "lodash"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "scripts": ["build", "lint"],
+  "dependencies": ["express"]
+}
