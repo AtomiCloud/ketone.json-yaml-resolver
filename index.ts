@@ -18,7 +18,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 function parseJson(content: string): Record<string, unknown> {
   const parsed = JSON.parse(content);
   if (!isPlainObject(parsed)) {
-    throw new Error('JSON root must be a plain object, got ' + typeof parsed);
+    throw new Error('JSON root must be a plain object, got ' + typeof parsed + ' (arrays are not supported)');
   }
   return parsed;
 }
@@ -57,18 +57,16 @@ function resolveMergeKeysObject(obj: Record<string, unknown>): Record<string, un
 
 function parseYaml(content: string): Record<string, unknown> {
   // Reject multi-document YAML
-  if (content.includes('---')) {
-    const docs = YAML.parseAllDocuments(content);
-    // parseAllDocuments always returns at least one doc (even for empty string)
-    const nonEmpty = docs.filter((d) => d.contents !== undefined && d.toJS() !== undefined);
-    if (nonEmpty.length > 1) {
-      throw new Error('Multi-document YAML is not supported');
-    }
+  const docs = YAML.parseAllDocuments(content);
+  // parseAllDocuments always returns at least one doc (even for empty string)
+  const nonEmpty = docs.filter((d) => d.contents !== undefined && d.toJS() !== undefined);
+  if (nonEmpty.length > 1) {
+    throw new Error('Multi-document YAML is not supported');
   }
 
   const parsed = YAML.parse(content);
   if (!isPlainObject(parsed)) {
-    throw new Error('YAML root must be a plain object, got ' + typeof parsed);
+    throw new Error('YAML root must be a plain object, got ' + typeof parsed + ' (scalars and arrays are not supported)');
   }
   // Deep-clone to break shared references from anchors/aliases
   // and resolve merge keys so stringify produces plain YAML
@@ -112,7 +110,11 @@ StartResolverWithLambda(async (input: ResolverInput): Promise<ResolverOutput> =>
 
   const path = files[0].path;
   const fileType = detectFileType(path);
-  const arrayStrategy = (config.arrayStrategy as ArrayStrategy) ?? 'concat';
+  const rawStrategy = config.arrayStrategy as string | undefined;
+  const arrayStrategy: ArrayStrategy =
+    rawStrategy === 'concat' || rawStrategy === 'replace' || rawStrategy === 'distinct'
+      ? rawStrategy
+      : 'concat';
 
   // Sort for commutativity (layer ascending, then template name)
   const sorted = [...files].sort((a, b) => {

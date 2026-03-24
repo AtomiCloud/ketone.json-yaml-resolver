@@ -1,7 +1,7 @@
 # Ticket: CU-86ex0n0yf
 
 - **Type**: Feature
-- **Status**: in progress
+- **Status**: complete
 - **URL**: https://app.clickup.com/t/86ex0n0yf
 
 ## Description
@@ -57,7 +57,7 @@ Validate all inputs have the same file path
 Sort inputs by (layer ASC, template ASC)
 Detect file type from extension (.json → JSON, .yaml/.yml → YAML)
 Parse each input into a JS object
-Deep merge using `smob with configured array strategy
+Deep merge using `smob` with configured array strategy
 Serialize back to the original format (JSON or YAML)
 Return merged content
 

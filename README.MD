@@ -89,7 +89,7 @@ CyanPrint may invoke the resolver with files in any order. The resolver ensures 
 {
   "server": {
     "host": "localhost",
-    "port": 3000,
+    "port": 8080,
     "ssl": true
   },
   "database": {}
