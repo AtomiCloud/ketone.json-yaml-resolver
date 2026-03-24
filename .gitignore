@@ -178,3 +178,5 @@ dist
 # kagent autopilot directory
 .kagent
 
+.cyan_output/
+.cyan_backup*/
