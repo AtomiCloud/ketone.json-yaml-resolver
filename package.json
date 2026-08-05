@@ -8,9 +8,5 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "dependencies": {
-    "@atomicloud/cyan-sdk": "^2.1.0",
-    "smob": "^1.6.0",
-    "yaml": "^2.7.0"
-  }
+  "dependencies": {}
 }

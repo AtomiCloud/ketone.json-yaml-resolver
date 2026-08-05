@@ -1,7 +1,5 @@
-import { StartResolverWithLambda } from '@atomicloud/cyan-sdk';
-import type { ResolverInput, ResolverOutput } from '@atomicloud/cyan-sdk';
-import { createMerger } from 'smob';
-import * as YAML from 'yaml';
+import type { ResolverInput, ResolverOutput } from '@cyanprint/sdk';
+import { createMerger, YAML } from './vendor/deps.js';
 
 type ArrayStrategy = 'concat' | 'replace' | 'distinct';
 
@@ -94,7 +92,7 @@ function getMerger(strategy: ArrayStrategy) {
   }
 }
 
-StartResolverWithLambda(async (input: ResolverInput): Promise<ResolverOutput> => {
+export async function resolver(input: ResolverInput): Promise<ResolverOutput> {
   const { config, files } = input;
 
   if (files.length === 0) {
@@ -134,4 +132,4 @@ StartResolverWithLambda(async (input: ResolverInput): Promise<ResolverOutput> =>
   const content = fileType === 'json' ? serializeJson(merged) : serializeYaml(merged);
 
   return { path, content };
-});
+}
