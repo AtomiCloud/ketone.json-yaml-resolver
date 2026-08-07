@@ -143,7 +143,7 @@ Reference this resolver in a template's `cyan.yaml`:
 
 ```yaml
 resolvers:
-  - resolver: atomi/json-yaml:1
+  - ref: atomi/json-yaml@2
     config:
       arrayStrategy: concat
     files: ['**/*.json', '**/*.yaml', '**/*.yml']
